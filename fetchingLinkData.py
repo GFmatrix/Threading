@@ -38,10 +38,10 @@ def get_data(driver, link, key):
   description = main_.find('div', attrs={"data-cy": "ad_description"}).text.strip()
   return {"name": name, "price": price, "location": location, "description": description}
 
-def main(link_list, filename):
+def maine(link_list, filename, i):
   chrome_options = Options()
   chrome_options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36")
-  print(f"Starting Thread {threading.current_thread().name}")
+  print(f"Starting Thread {i}")
   driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()), options=chrome_options)
   data = []
   for key, link in enumerate(link_list):
@@ -54,8 +54,20 @@ def main(link_list, filename):
   dump(filename, data)
     
   driver.close()
-  print(f"Finishing Thread {threading.current_thread().name}")
+  print(f"Finishing Thread {i}")
   
+<<<<<<< HEAD
+# if __name__ == "__main__":
+linkList = load("links.json")
+
+try: os.mkdir('data')
+except: pass
+
+for i in range(4):
+  a = linkList[len(linkList) // 4 * i:len(linkList) // 4 * (i + 1)]
+  x = threading.Thread(target=maine, args=(a, f'data/dataN{i}.json', i, ))
+  x.start()
+=======
 if __name__ == "__main__":
   linkList = load("links.json")
   try: os.mkdir('data')
@@ -64,3 +76,4 @@ if __name__ == "__main__":
     a = linkList[len(linkList) // 4 * i:len(linkList) // 4 * (i + 1)]
     x = threading.Thread(target=main, args=(a, f'data/dataN{i}.json', ), name=i)
     x.start()
+>>>>>>> da375456eaeee32ad7242c36c0cd7c6a446dfb76
