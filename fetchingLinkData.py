@@ -1,6 +1,7 @@
 import threading
 import time
 import json
+import os
 from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -57,6 +58,8 @@ def main(link_list, filename):
   
 if __name__ == "__main__":
   linkList = load("links.json")
+  try: os.mkdir('data')
+  except: pass
   for i in range(4):
     a = linkList[len(linkList) // 4 * i:len(linkList) // 4 * (i + 1)]
     x = threading.Thread(target=main, args=(a, f'data/dataN{i}.json', ), name=i)
